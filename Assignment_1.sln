@@ -1,8 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{8C8E5F5B-5880-468E-8E38-BF22C2AC01AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Server\Entities\Entities.csproj", "{F733EFF3-C9E5-41AA-83BF-12DEB5DC0601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryContracts", "Server\RepositoryContracts\RepositoryContracts.csproj", "{2F7BA1DE-F19E-4C6E-8F4C-41D3F3146AA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMemoryRepositories", "Server\InMemoryRepositories\InMemoryRepositories.csproj", "{E12ED587-82D2-4579-A487-A43D9A6DF059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F733EFF3-C9E5-41AA-83BF-12DEB5DC0601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F733EFF3-C9E5-41AA-83BF-12DEB5DC0601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F733EFF3-C9E5-41AA-83BF-12DEB5DC0601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F733EFF3-C9E5-41AA-83BF-12DEB5DC0601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F7BA1DE-F19E-4C6E-8F4C-41D3F3146AA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F7BA1DE-F19E-4C6E-8F4C-41D3F3146AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F7BA1DE-F19E-4C6E-8F4C-41D3F3146AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F7BA1DE-F19E-4C6E-8F4C-41D3F3146AA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E12ED587-82D2-4579-A487-A43D9A6DF059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E12ED587-82D2-4579-A487-A43D9A6DF059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E12ED587-82D2-4579-A487-A43D9A6DF059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E12ED587-82D2-4579-A487-A43D9A6DF059}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F733EFF3-C9E5-41AA-83BF-12DEB5DC0601} = {8C8E5F5B-5880-468E-8E38-BF22C2AC01AC}
+		{2F7BA1DE-F19E-4C6E-8F4C-41D3F3146AA9} = {8C8E5F5B-5880-468E-8E38-BF22C2AC01AC}
+		{E12ED587-82D2-4579-A487-A43D9A6DF059} = {8C8E5F5B-5880-468E-8E38-BF22C2AC01AC}
 	EndGlobalSection
 EndGlobal
