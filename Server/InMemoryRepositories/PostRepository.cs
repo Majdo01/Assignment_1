@@ -6,6 +6,16 @@ namespace InMemoryRepositories;
 public class PostRepository : IPostRepository
 {
     private readonly List<Post> posts = [];
+    
+    public PostRepository()
+    {
+        _ = AddAsync(new Post("Favorite video game?", "What's everyone's favorite game right now?", 1)).Result;
+        _ = AddAsync(new Post("Weekend plans", "Anyone doing anything interesting this weekend?", 1)).Result;
+        _ = AddAsync(new Post("Coffee or tea?", "Which one do you prefer in the morning?", 3)).Result;
+        _ = AddAsync(new Post("Programming help", "Does anyone know a good way to learn programming?", 2)).Result;
+        _ = AddAsync(new Post("Best movie?", "What movie would you recommend watching tonight?", 4)).Result;
+        _ = AddAsync(new Post("Gaming setup", "What does your ideal gaming setup look like?", 3)).Result;
+    }
 
     public Task<Post> AddAsync(Post post)
     {

@@ -7,6 +7,14 @@ public class UserRepository : IUserRepository
 {
     private readonly List<User> users = [];
 
+    public UserRepository()
+    {
+        _ = AddAsync(new User("BoB", "1234")).Result;
+        _ = AddAsync(new User("Alice", "4321")).Result;
+        _ = AddAsync(new User("GoRgE", "1243")).Result;
+        _ = AddAsync(new User("Ronan", "2143")).Result;
+    }
+
     public Task<User> AddAsync(User user)
     {
         user.Id = users.Any()
