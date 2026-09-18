@@ -7,21 +7,7 @@
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8d312c6-52fe-4e3c-b956-41e9e122213c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Server/CLI/CLI.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/CLI/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/CLI/UI/ClipApp.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/CLI/UI/CommentView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/CLI/UI/PostView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/CLI/UI/UserView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Assignment_1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Assignment_1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assignment_2.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment_2.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Entities/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Entities/Comment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Entities/Post.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Entities/Post.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/InMemoryRepositories/CommentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/InMemoryRepositories/CommentRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/InMemoryRepositories/PostRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/InMemoryRepositories/PostRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/InMemoryRepositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/InMemoryRepositories/UserRepository.cs" afterDir="false" />
-    </list>
+    <list default="true" id="e8d312c6-52fe-4e3c-b956-41e9e122213c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
