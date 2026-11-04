@@ -1,0 +1,127 @@
+@page "/posts/create"
+@using ApiContracts
+@using FrontEnd.HttpServices
+@inject IPostService PostService
+@inject IUserService UserService
+@inject NavigationManager Navigation
+
+<PageTitle>Create post</PageTitle>
+
+<h1>Create post</h1>
+
+@if (_loadingUsers)
+{
+    <p>Loading users...</p>
+}
+else if (_activeUserId == 0)
+{
+    <p class="text-warning">
+        You need to <a href="/register">register a user</a> before creating a post.
+    </p>
+}
+else
+{
+    <p>Creating post as: <strong>@_activeUserName</strong></p>
+
+    <EditForm Model="_request" OnValidSubmit="CreateAsync" FormName="CreatePostForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label for="postTitle" class="form-label">Title</label>
+            <InputText id="postTitle"
+                       class="form-control"
+                       @bind-Value="_request.Title" />
+        </div>
+
+        <div class="mb-3">
+            <label for="postBody" class="form-label">Body</label>
+            <InputTextArea id="postBody"
+                           class="form-control"
+                           @bind-Value="_request.Body" />
+        </div>
+
+        <button class="btn btn-primary" type="submit" disabled="@_submitting">
+            @(_submitting ? "Creating..." : "Create post")
+        </button>
+
+        <a href="/posts" class="btn btn-secondary ms-2">Cancel</a>
+    </EditForm>
+}
+
+@if (!string.IsNullOrWhiteSpace(_error))
+{
+    <p class="text-danger mt-3">@_error</p>
+}
+
+@code {
+    private CreatePostDto _request = new()
+    {
+        Title = "",
+        Body = "",
+        UserId = 0
+    };
+
+    private int _activeUserId;
+    private string _activeUserName = "";
+    private string _error = "";
+    private bool _loadingUsers = true;
+    private bool _submitting;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            List<UserDto> users = await UserService.GetUsersAsync();
+
+            UserDto? activeUser = users
+                .Where(u => !string.IsNullOrWhiteSpace(u.UserName))
+                .OrderByDescending(u => u.Id)
+                .FirstOrDefault();
+
+            if (activeUser is not null)
+            {
+                _activeUserId = activeUser.Id;
+                _activeUserName = activeUser.UserName;
+                _request.UserId = activeUser.Id;
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = $"Could not load users: {ex.Message}";
+        }
+        finally
+        {
+            _loadingUsers = false;
+        }
+    }
+
+    private async Task CreateAsync()
+    {
+        if (_activeUserId == 0)
+        {
+            _error = "Please register a user first.";
+            return;
+        }
+
+        _submitting = true;
+        _error = "";
+
+        try
+        {
+            _request.UserId = _activeUserId;
+
+            PostDto post = await PostService.AddPostAsync(_request);
+
+            Navigation.NavigateTo($"/posts/{post.Id}");
+        }
+        catch (Exception ex)
+        {
+            _error = $"Could not create post: {ex.Message}";
+        }
+        finally
+        {
+            _submitting = false;
+        }
+    }
+}

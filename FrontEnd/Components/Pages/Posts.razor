@@ -1,0 +1,78 @@
+@page "/posts"
+@using ApiContracts
+@using FrontEnd.HttpServices
+@inject IPostService PostService
+@inject IUserService UserService
+
+<PageTitle>Posts</PageTitle>
+
+<h1>All posts</h1>
+
+<p>
+    <a class="btn btn-primary" href="/posts/create">Create new post</a>
+</p>
+
+@if (_loading)
+{
+    <p>Loading posts...</p>
+}
+else if (!string.IsNullOrWhiteSpace(_error))
+{
+    <p class="text-danger">@_error</p>
+}
+else if (_posts.Count == 0)
+{
+    <p>No posts have been created yet.</p>
+}
+else
+{
+    @foreach (PostDto post in _posts)
+    {
+        <div class="card mb-3" @key="post.Id">
+            <div class="card-body">
+                <h3>@post.Title</h3>
+                <p><strong>Author:</strong> @GetAuthorName(post.UserId)</p>
+                <p style="white-space: pre-wrap">@post.Body</p>
+                <a class="btn btn-outline-primary" href="@($"/posts/{post.Id}")">
+                    View post and comments
+                </a>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private List<PostDto> _posts = new();
+    private List<UserDto> _users = new();
+    private bool _loading = true;
+    private string _error = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _posts = (await PostService.GetPostsAsync())
+                .Where(p => !string.IsNullOrWhiteSpace(p.Title)
+                            || !string.IsNullOrWhiteSpace(p.Body))
+                .ToList();
+            _users = await UserService.GetUsersAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = $"Could not load posts: {ex.Message}";
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private string GetAuthorName(int userId)
+    {
+        string? userName = _users.FirstOrDefault(u => u.Id == userId)?.UserName;
+
+        return string.IsNullOrWhiteSpace(userName)
+            ? $"User #{userId}"
+            : userName;
+    }
+}

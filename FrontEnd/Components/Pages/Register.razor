@@ -1,0 +1,65 @@
+﻿@page "/register"
+@using ApiContracts
+@using FrontEnd.HttpServices
+@inject IUserService UserService
+
+<PageTitle>Register</PageTitle>
+
+<h1>Create user</h1>
+
+<EditForm Model="_request" OnValidSubmit="RegisterAsync" FormName="RegisterForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Username</label>
+        <InputText class="form-control"
+                   @bind-Value="_request.UserName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Password</label>
+        <InputText type="password"
+                   class="form-control"
+                   @bind-Value="_request.Password" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+        Register
+    </button>
+</EditForm>
+
+@if (!string.IsNullOrWhiteSpace(_message))
+{
+    <p class="mt-3">@_message</p>
+}
+
+@code {
+    private CreateUserDto _request = new()
+    {
+        UserName = "",
+        Password = ""
+    };
+
+    private string _message = "";
+
+    private async Task RegisterAsync()
+    {
+        try
+        {
+            UserDto user = await UserService.AddUserAsync(_request);
+
+            _message = $"User created successfully. ID: {user.Id}";
+
+            _request = new CreateUserDto
+            {
+                UserName = "",
+                Password = ""
+            };
+        }
+        catch (Exception ex)
+        {
+            _message = $"Could not create user: {ex.Message}";
+        }
+    }
+}
