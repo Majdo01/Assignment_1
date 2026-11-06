@@ -8,9 +8,14 @@
 
 <h1>All posts</h1>
 
-<p>
-    <a class="btn btn-primary" href="/posts/create">Create new post</a>
-</p>
+<AuthorizeView>
+    <Authorized>
+        <p><a class="btn btn-primary" href="/posts/create">Create new post</a></p>
+    </Authorized>
+    <NotAuthorized>
+        <p><a href="/login">Log in</a> to create a post.</p>
+    </NotAuthorized>
+</AuthorizeView>
 
 @if (_loading)
 {

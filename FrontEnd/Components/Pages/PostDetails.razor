@@ -1,6 +1,7 @@
 @page "/posts/{Id:int}"
 @using ApiContracts
 @using FrontEnd.HttpServices
+@using System.Security.Claims
 @inject IPostService PostService
 @inject IUserService UserService
 @inject ICommentService CommentService
@@ -56,8 +57,7 @@ else if (_post is not null)
     @if (_activeUserId == 0)
     {
         <p class="text-warning">
-            No registered user with a username was found.
-            Please <a href="/register">register a user</a> first.
+            Please <a href="/login">log in</a> to add a comment.
         </p>
     }
     else
@@ -91,6 +91,9 @@ else if (_post is not null)
     [Parameter]
     public int Id { get; set; }
 
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
+
     private PostDto? _post;
     private List<CommentDto> _comments = new();
     private List<UserDto> _users = new();
@@ -121,13 +124,21 @@ else if (_post is not null)
 
             _authorName = FindUserName(_post.UserId);
 
-            UserDto? activeUser = _users
-                .Where(u => !string.IsNullOrWhiteSpace(u.UserName))
-                .OrderByDescending(u => u.Id)
-                .FirstOrDefault();
+            AuthenticationState authState = await AuthenticationStateTask;
+            ClaimsPrincipal currentUser = authState.User;
+            string? idValue = currentUser.FindFirst("Id")?.Value;
 
-            _activeUserId = activeUser?.Id ?? 0;
-            _activeUserName = activeUser?.UserName ?? "";
+            if (currentUser.Identity?.IsAuthenticated == true &&
+                int.TryParse(idValue, out int authenticatedUserId))
+            {
+                _activeUserId = authenticatedUserId;
+                _activeUserName = currentUser.Identity.Name ?? "";
+            }
+            else
+            {
+                _activeUserId = 0;
+                _activeUserName = "";
+            }
         }
         catch (Exception ex)
         {
@@ -162,7 +173,7 @@ else if (_post is not null)
 
         if (_activeUserId == 0)
         {
-            _commentMessage = "Please register a user before commenting.";
+            _commentMessage = "Please log in before commenting.";
             return;
         }
 
